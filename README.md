@@ -4,10 +4,6 @@ Fruit Ninja in **pygame** using pose motion tracking in **MediaPipe**.
 
 ### How to Play:
 
-If you're not a programmer, click the green `Code` button, click `Download ZIP`,  and extract the folder. Then look for `Fruit Ninja Game` inside, then scroll down and run `fruit_ninja.exe`. This application is not yet verified, so you will receive a **warning** on Windows the first time you run it. Click `More info` then `Run anyway`.
-
-**OR**
-
 Copy this GitHub repository, and run [fruit_ninja.py](https://github.com/mmbaguette/Fruit-Ninja-VR/blob/main/scripts/fruit_ninja.py) with Python 3.
 
 Press the `Esc` key to exit.
@@ -39,9 +35,9 @@ pip install mediapipe
 
 ### Pyinstaller (package game into executable)
 
-Package your *own* file with your *own* game settings like higher resolution (sacrifice performance). I used this command to package the app into a pyinstaller executable.
+Package your *own* file with your *own* game settings like higher resolution (sacrifice performance). I used this command to package the app into a pyinstaller executable. Place the app inside the working directory with the over dependencies like `images`.
 `
-pyinstaller -w --paths="PYTHON_PATH\Python39\Lib\site-packages\cv2" --collect-data mediapipe --add-data "PYTHON_PATH\Python39\Lib\site-packages\mediapipe;mediapipe" -i "images/icon.ico" scripts/fruit_ninja.py
+pyinstaller -w --onefile --paths="PYTHON_PATH\Python39\Lib\site-packages\cv2" --collect-data mediapipe --add-data "PYTHON_PATH\Python39\Lib\site-packages\mediapipe;mediapipe" -i "images/icon.ico" scripts/fruit_ninja.py
 `
 Install pyinstaller if you haven't already:
 ```
