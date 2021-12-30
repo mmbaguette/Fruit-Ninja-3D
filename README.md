@@ -22,8 +22,6 @@ Press the `Esc` key to exit.
 -   Start menu (hands up before playing to avoid accidentally starting)
 -   Preview webcam video while playing by changing the `SHOW_WEBCAM` setting in [fruit_ninja.py](https://github.com/mmbaguette/Fruit-Ninja-VR/blob/main/scripts/fruit_ninja.py)
 
-Clone the git repository, and run [fruit_ninja.py](https://github.com/mmbaguette/Fruit-Ninja-VR/blob/main/scripts/fruit_ninja.py) to begin!
-
 ### Dependences:
 ```
 pip install pygame
