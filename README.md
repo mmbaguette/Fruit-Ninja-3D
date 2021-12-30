@@ -2,7 +2,7 @@
 
 Fruit Ninja in **pygame** using pose motion tracking in **MediaPipe**.
 
-### HOW TO PLAY:
+### How to Play:
 
 If you're not a programmer, click the green `Code` button, click `Download ZIP`,  and extract the folder. Then look for `Fruit Ninja Game` inside, then scroll down and run `fruit_ninja.exe`. This application is not yet verified, so you will receive a **warning** on Windows the first time you run it. Click `More info` then `Run anyway`.
 
