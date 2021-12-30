@@ -4,7 +4,7 @@ Fruit Ninja in **pygame** using pose motion tracking in **MediaPipe**.
 
 ### How to Play:
 
-Copy this GitHub repository, and run [fruit_ninja.py](https://github.com/mmbaguette/Fruit-Ninja-VR/blob/main/scripts/fruit_ninja.py) with Python 3.
+Copy this GitHub repository, and run [fruit_ninja.py](scripts/fruit_ninja.py) with Python 3.
 
 Press the `Esc` key to exit.
 
