@@ -1,6 +1,6 @@
 # Fruit Ninja VR (using webcam) 🍉
 
-Fruit Ninja in **pygame** using pose motion tracking in **MediaPipe**.
+Fruit Ninja in **pygame** using pose estimation in **MediaPipe**.
 
 ### How to Play:
 
