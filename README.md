@@ -31,12 +31,12 @@ pip install mediapipe
 
 ![alt text](https://github.com/mmbaguette/Fruit-Ninja-VR/blob/main/preview/fruit%20ninja.jpg?raw=true)
 
-### Pyinstaller (package game into executable)
+### Pyinstaller (package game into an executable)
 
-Package your *own* file with your *own* game settings like higher resolution (sacrifice performance). I used this command to package the app into a pyinstaller executable. Place the app inside the working directory with the over dependencies like `images`.
-`
+Make your own Fruit Ninja VR executable. Use this command inside the working directory (`Fruit-Ninja-VR` not `scripts`) to package the game into an `exe` file. 
+```
 pyinstaller -w --onefile --paths="PYTHON_PATH\Python39\Lib\site-packages\cv2" --collect-data mediapipe --add-data "PYTHON_PATH\Python39\Lib\site-packages\mediapipe;mediapipe" -i "images/icon.ico" scripts/fruit_ninja.py
-`
+```
 Install pyinstaller if you haven't already:
 ```
 pip install pyinstaller
