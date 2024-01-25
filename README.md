@@ -1,4 +1,4 @@
-# Fruit Ninja VR (using webcam) 🍉
+# Fruit Ninja 3D (using webcam) 🍉
 
 Fruit Ninja in **pygame** using pose estimation in **MediaPipe**.
 
