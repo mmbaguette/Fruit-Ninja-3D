@@ -4,6 +4,8 @@ Fruit Ninja in **pygame** using pose estimation in **MediaPipe**.
 
 ### How to Play:
 
+Setup requires technical skills with Python.
+
 Copy this GitHub repository, and run [fruit_ninja.py](scripts/fruit_ninja.py) with Python 3. 
 You need to know how to install Python, and run scripts in the terminal. Make sure your current working directory is the main fruit ninja folder and not `scripts`. Install the dependencies below in the terminal using the `pip` command. 
 Press the `Esc` key to exit.
