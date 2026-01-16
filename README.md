@@ -30,7 +30,7 @@ Press the `Esc` key to exit.
 ```
 pip install pygame 
 pip install opencv-python
-pip install git+https://github.com/google-ai-edge/mediapipe.git@v0.8.9
+pip install git+https://github.com/google-ai-edge/mediapipe.git@v0.10.14
 ```
 
 ### Pyinstaller (package game into an executable)
