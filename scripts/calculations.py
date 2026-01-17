@@ -69,19 +69,20 @@ def colliding_fruit(point1: tuple, fruit):
 
 # add left and right index and pinky pose landmarks if they exist
 def knife_trails_and_find_hands(
-    results, 
-    left_knife_trail, 
+    results,
+    left_knife_trail,
     right_knife_trail,
-    width, 
+    width,
     height) -> tuple:
     left_hand_is_visible = True
     right_hand_is_visible = True
 
     if results.pose_landmarks:
-        left_pinky = results.pose_landmarks.landmark[17]
-        left_index = results.pose_landmarks.landmark[19]
-        right_pinky = results.pose_landmarks.landmark[18]
-        right_index = results.pose_landmarks.landmark[20]
+        landmarks = results.pose_landmarks[0]
+        left_pinky = landmarks[17]
+        left_index = landmarks[19]
+        right_pinky = landmarks[18]
+        right_index = landmarks[20]
 
         if left_pinky.visibility >= 1 and left_index.visibility >= 1:
             left_hand_is_visible = True
@@ -104,22 +105,23 @@ def knife_trails_and_find_hands(
     else:
         return None, None
 
-def find_and_draw_pose(pose, frame, background) -> tuple:
+def find_and_draw_pose(pose, frame, background, timestamp_ms) -> tuple:
     background = background.copy()
 
     # used for mediapipe to detect pose
     image_to_process = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    # improve performance by optionally marking image as not writeable
-    image_to_process.flags.writeable = False
-    results = pose.process(image_to_process)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image_to_process)
+    results = pose.detect_for_video(mp_image, timestamp_ms)
 
     # draw pose
-    MP_DRAWING.draw_landmarks(
-        background,
-        results.pose_landmarks,
-        MP_POSE.POSE_CONNECTIONS,
-        landmark_drawing_spec=MP_DRAWING_STYLES.get_default_pose_landmarks_style())
+    if results.pose_landmarks:
+        for pose_landmarks in results.pose_landmarks:
+            MP_DRAWING.draw_landmarks(
+                background,
+                pose_landmarks,
+                MP_POSE.POSE_CONNECTIONS,
+                landmark_drawing_spec=MP_DRAWING_STYLES.get_default_pose_landmarks_style())
     return results, background
 
 def array_img_to_pygame(img, width, height):

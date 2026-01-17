@@ -1,10 +1,14 @@
+import os
 import random
-import time
 import threading
+import time
+import urllib.request
 
 import pygame
 import cv2
 import mediapipe as mp
+from mediapipe.tasks import python as mp_python
+from mediapipe.tasks.python import vision
 
 from fruit import Fruit, fruit_names
 import calculations
@@ -36,8 +40,12 @@ WANTED_WIDTH, WANTED_HEIGHT = 1920, 1080 # the size we expect
 CAP_WIDTH, CAP_HEIGHT = 1280, 720 # size of video capture
 MAX_FRUIT_HEIGHT = GAME_HEIGHT / 4 # from top of screen
 ROUND_COOLDOWN = 2 # seconds
-MP_POSE = mp.solutions.pose
 BACKGROUND_IMAGE = "images/background.jpg"
+POSE_LANDMARKER_MODEL_PATH = os.path.join("models", "pose_landmarker_lite.task")
+POSE_LANDMARKER_MODEL_URL = (
+    "https://storage.googleapis.com/mediapipe-models/pose_landmarker/"
+    "pose_landmarker_lite/float16/latest/pose_landmarker_lite.task"
+)
 
 sad_fruit = [
     "images/sad_apple.png",
@@ -58,6 +66,14 @@ pygame.font.init()
 
 def ratio(x):
     return round(x * (GAME_WIDTH / WANTED_WIDTH))
+
+def ensure_pose_landmarker_model():
+    if os.path.exists(POSE_LANDMARKER_MODEL_PATH):
+        return POSE_LANDMARKER_MODEL_PATH
+
+    os.makedirs(os.path.dirname(POSE_LANDMARKER_MODEL_PATH), exist_ok=True)
+    urllib.request.urlretrieve(POSE_LANDMARKER_MODEL_URL, POSE_LANDMARKER_MODEL_PATH)
+    return POSE_LANDMARKER_MODEL_PATH
 
 # fonts
 SMALL_NUMBER_FONT = pygame.font.SysFont('Comic Sans MS', ratio(30))
@@ -101,11 +117,19 @@ def main():
     left_circles = []
     right_circles = []
 
-    # create pose object used to motion track the pose of the user
-    with MP_POSE.Pose(
-        min_detection_confidence = 0.7,
+    model_path = ensure_pose_landmarker_model()
+    base_options = mp_python.BaseOptions(model_asset_path=model_path)
+    options = vision.PoseLandmarkerOptions(
+        base_options=base_options,
+        running_mode=vision.RunningMode.VIDEO,
+        min_pose_detection_confidence=0.7,
+        min_pose_presence_confidence=0.7,
         min_tracking_confidence=0.5,
-        model_complexity=0) as pose:
+        num_poses=1,
+    )
+
+    # create pose object used to motion track the pose of the user
+    with vision.PoseLandmarker.create_from_options(options) as pose:
 
         # open the webcamera and set the capture's resolution
         cap = cv2.VideoCapture(0)
@@ -123,10 +147,12 @@ def main():
                 continue
             
             # process webcam to track pose, and draw it on image_to_display
+            timestamp_ms = int(time.time() * 1000)
             results, image_to_display = calculations.find_and_draw_pose(
-                pose, 
+                pose,
                 frame,
-                background_cv2_image)
+                background_cv2_image,
+                timestamp_ms)
 
              # pass mutable reference of webcam feed, display on corner of image_to_display
             if SHOW_MINICAM:
